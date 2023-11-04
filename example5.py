@@ -11,14 +11,14 @@ Check stability on item - first rule
 
 # init packing function
 packer = Packer()
-#  init bin 
+#  init bin_
 box = Bin('example5', (5, 4, 3), 100,0,0)
 #  add item
-# Item('item partno', (W,H,D), Weight, Packing Priority level, load bear, Upside down or not , 'item color')
-packer.addBin(box)
-packer.addItem(Item(partno='Box-3', name='test', typeof='cube', WHD=(2, 5, 2), weight=1, level=1,loadbear=100, updown=True, color='pink'))
-packer.addItem(Item(partno='Box-3', name='test', typeof='cube', WHD=(2, 3, 2), weight=1, level=2,loadbear=100, updown=True, color='pink')) # Try switching WHD=(2, 2, 2) and (2, 3, 2) to compare the results
-packer.addItem(Item(partno='Box-4', name='test', typeof='cube', WHD=(5, 4, 1), weight=1,level=3,loadbear=100, updown=True, color='brown'))
+# Item('item part_no', (W,H,D), Weight, Packing Priority level, load bear, Upside down or not , 'item color')
+packer.add_bin(box)
+packer.add_item(Item(part_no='Box-3', name='test', typeof='cube', dims=(2, 5, 2), weight=1, level=1, load_bear=100, updown=True, color='pink'))
+packer.add_item(Item(part_no='Box-3', name='test', typeof='cube', dims=(2, 3, 2), weight=1, level=2, load_bear=100, updown=True, color='pink')) # Try switching dim=(2, 2, 2) and (2, 3, 2) to compare the results
+packer.add_item(Item(part_no='Box-4', name='test', typeof='cube', dims=(5, 4, 1), weight=1, level=3, load_bear=100, updown=True, color='brown'))
 
 # calculate packing 
 packer.pack(
@@ -31,7 +31,7 @@ packer.pack(
 )
 
 # put order
-packer.putOrder()
+packer.put_order()
 
 # print result
 for b in packer.bins:
@@ -43,7 +43,7 @@ for b in packer.bins:
     volume_f = 0
     unfitted_name = ''
     for item in b.items:
-        print("partno : ",item.partno)
+        print("part_no : ", item.part_no)
         print("color : ",item.color)
         print("position : ",item.position)
         print("rotation type : ",item.rotation_type)
@@ -55,13 +55,13 @@ for b in packer.bins:
     print("***************************************************")
     print("UNFITTED ITEMS:")
     for item in b.unfitted_items:
-        print("partno : ",item.partno)
+        print("part_no : ", item.part_no)
         print("color : ",item.color)
         print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
         print("volume : ",float(item.width) * float(item.height) * float(item.depth))
         print("weight : ",float(item.weight))
         volume_f += float(item.width) * float(item.height) * float(item.depth)
-        unfitted_name += '{},'.format(item.partno)
+        unfitted_name += '{},'.format(item.part_no)
         print("***************************************************")
     print("***************************************************")
     print('space utilization : {}%'.format(round(volume_t / float(volume) * 100 ,2)))
@@ -74,8 +74,8 @@ for b in packer.bins:
 
     # draw results
     painter = Painter(b)
-    fig = painter.plotBoxAndItems(
-        title=b.partno,
+    fig = painter.plot_box_and_items(
+        title=b.part_no,
         alpha=0.8,
         write_num=False,
         fontsize=10

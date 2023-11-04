@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class RotationType:
     RT_WHD = 0
     RT_HWD = 1
@@ -8,12 +12,13 @@ class RotationType:
 
     ALL = [RT_WHD, RT_HWD, RT_HDW, RT_DHW, RT_DWH, RT_WDH]
     # un upright or un updown
-    Notupdown = [RT_WHD,RT_HWD]
- 
+    not_updown = [RT_WHD, RT_HWD]
+
+
+@dataclass(frozen=True)
 class Axis:
     WIDTH = 0
     HEIGHT = 1
     DEPTH = 2
 
     ALL = [WIDTH, HEIGHT, DEPTH]
-

@@ -10,17 +10,17 @@ This example is used to demonstrate that the algorithm does not optimize.
 
 # init packing function
 packer = Packer()
-#  init bin 
+#  init bin_
 box = Bin('example3', (6, 1, 5), 100,0,put_type=0)
 #  add item
-# Item('item partno', (W,H,D), Weight, Packing Priority level, load bear, Upside down or not , 'item color')
-packer.addBin(box)
-# If all item WHD=(2, 1, 3) , item can be fully packed into box, but if choose one item and modify WHD=(3, 1, 2) , item can't be fully packed into box.
-packer.addItem(Item(partno='Box-1',name='test',typeof='cube', WHD=(2, 1, 3), weight=1, level=1,loadbear=100, updown=True, color='yellow'))
-packer.addItem(Item(partno='Box-2',name='test',typeof='cube', WHD=(3, 1, 2), weight=1, level=1,loadbear=100, updown=True, color='pink')) # Try switching WHD=(3, 1, 2) and (2, 1, 3) to compare the results
-packer.addItem(Item(partno='Box-3',name='test',typeof='cube', WHD=(2, 1, 3), weight=1,level= 1,loadbear=100, updown=True, color='brown'))
-packer.addItem(Item(partno='Box-4',name='test',typeof='cube', WHD=(2, 1, 3), weight=1, level=1,loadbear=100, updown=True, color='cyan'))
-packer.addItem(Item(partno='Box-5',name='test',typeof='cube', WHD=(2, 1, 3), weight=1, level=1,loadbear=100, updown=True, color='olive'))
+# Item('item part_no', (W,H,D), Weight, Packing Priority level, load bear, Upside down or not , 'item color')
+packer.add_bin(box)
+# If all item dim=(2, 1, 3) , item can be fully packed into box, but if choose one item and modify dim=(3, 1, 2) , item can't be fully packed into box.
+packer.add_item(Item(part_no='Box-1', name='test', typeof='cube', dims=(2, 1, 3), weight=1, level=1, load_bear=100, updown=True, color='yellow'))
+packer.add_item(Item(part_no='Box-2', name='test', typeof='cube', dims=(3, 1, 2), weight=1, level=1, load_bear=100, updown=True, color='pink')) # Try switching dim=(3, 1, 2) and (2, 1, 3) to compare the results
+packer.add_item(Item(part_no='Box-3', name='test', typeof='cube', dims=(2, 1, 3), weight=1, level= 1, load_bear=100, updown=True, color='brown'))
+packer.add_item(Item(part_no='Box-4', name='test', typeof='cube', dims=(2, 1, 3), weight=1, level=1, load_bear=100, updown=True, color='cyan'))
+packer.add_item(Item(part_no='Box-5', name='test', typeof='cube', dims=(2, 1, 3), weight=1, level=1, load_bear=100, updown=True, color='olive'))
 
 # calculate packing 
 packer.pack(
@@ -42,7 +42,7 @@ volume_t = 0
 volume_f = 0
 unfitted_name = ''
 for item in b.items:
-    print("partno : ",item.partno)
+    print("part_no : ", item.part_no)
     print("color : ",item.color)
     print("position : ",item.position)
     print("rotation type : ",item.rotation_type)
@@ -54,13 +54,13 @@ for item in b.items:
 print("***************************************************")
 print("UNFITTED ITEMS:")
 for item in b.unfitted_items:
-    print("partno : ",item.partno)
+    print("part_no : ", item.part_no)
     print("color : ",item.color)
     print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
     print("volume : ",float(item.width) * float(item.height) * float(item.depth))
     print("weight : ",float(item.weight))
     volume_f += float(item.width) * float(item.height) * float(item.depth)
-    unfitted_name += '{},'.format(item.partno)
+    unfitted_name += '{},'.format(item.part_no)
     print("***************************************************")
 print("***************************************************")
 print('space utilization : {}%'.format(round(volume_t / float(volume) * 100 ,2)))
@@ -73,8 +73,8 @@ print('used time : ',stop - start)
 
 # draw results
 painter = Painter(b)
-fig = painter.plotBoxAndItems(
-    title=b.partno,
+fig = painter.plot_box_and_items(
+    title=b.part_no,
     alpha=0.8,
     write_num=False,
     fontsize=10
