@@ -1,5 +1,10 @@
-from py3dbp import Packer, Bin, Item, Painter
 import time
+
+from py3dbp.agents.bin import Bin
+from py3dbp.agents.item import Item
+from py3dbp.agents.packer import Packer
+from py3dbp.agents.painter import Painter
+
 start = time.time()
 
 '''
@@ -11,7 +16,7 @@ This example is used to demonstrate the mixed packing of cube and cylinder.
 # init packing function
 packer = Packer()
 #  init bin_
-box = Bin('example1', (5.6875, 10.75, 15.0), 70.0,0,0)
+box = Bin('example1', (5.6875, 10.75, 15.0), 70.0, 0, 0)
 packer.add_bin(box)
 #  add item
 packer.add_item(Item('50g [powder 1]', 'test', 'cube', (2, 2, 4), 1, 1, 100, True, 'red'))
@@ -49,33 +54,33 @@ volume_f = 0
 unfitted_name = ''
 for item in b.items:
     print("part_no : ", item.part_no)
-    print("color : ",item.color)
-    print("position : ",item.position)
-    print("rotation type : ",item.rotation_type)
-    print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-    print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-    print("weight : ",float(item.weight))
+    print("color : ", item.color)
+    print("position : ", item.position)
+    print("rotation type : ", item.rotation_type)
+    print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+    print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+    print("weight : ", float(item.weight))
     volume_t += float(item.width) * float(item.height) * float(item.depth)
     print("***************************************************")
 print("***************************************************")
 print("UNFITTED ITEMS:")
 for item in b.unfitted_items:
     print("part_no : ", item.part_no)
-    print("color : ",item.color)
-    print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-    print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-    print("weight : ",float(item.weight))
+    print("color : ", item.color)
+    print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+    print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+    print("weight : ", float(item.weight))
     volume_f += float(item.width) * float(item.height) * float(item.depth)
     unfitted_name += '{},'.format(item.part_no)
     print("***************************************************")
 print("***************************************************")
-print('space utilization : {}%'.format(round(volume_t / float(volume) * 100 ,2)))
-print('residual volumn : ', float(volume) - volume_t )
-print('unpack item : ',unfitted_name)
-print('unpack item volumn : ',volume_f)
-print("gravity distribution : ",b.gravity)
+print('space utilization : {}%'.format(round(volume_t / float(volume) * 100, 2)))
+print('residual volumn : ', float(volume) - volume_t)
+print('unpack item : ', unfitted_name)
+print('unpack item volumn : ', volume_f)
+print("gravity distribution : ", b.gravity)
 stop = time.time()
-print('used time : ',stop - start)
+print('used time : ', stop - start)
 
 # draw results
 painter = Painter(b)

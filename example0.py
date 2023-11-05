@@ -1,5 +1,10 @@
-from py3dbp import Packer, Bin, Item, Painter
 import time
+
+from py3dbp.agents.bin import Bin
+from py3dbp.agents.item import Item
+from py3dbp.agents.packer import Packer
+from py3dbp.agents.painter import Painter
+
 start = time.time()
 
 '''
@@ -88,7 +93,7 @@ for i in range(10):
 packer.pack(
     bigger_first=True,
     distribute_items=False,
-    fix_point=False, # Try switching fix_point=True/False to compare the results
+    fix_point=False,  # Try switching fix_point=True/False to compare the results
     check_stable=False,
     support_surface_ratio=0.75,
     number_of_decimals=0
@@ -108,13 +113,13 @@ for box in packer.bins:
     # '''
     for item in box.items:
         print("part_no : ", item.part_no)
-        print("type : ",item.name)
-        print("color : ",item.color)
-        print("position : ",item.position)
-        print("rotation type : ",item.rotation_type)
-        print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-        print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-        print("weight : ",float(item.weight))
+        print("type : ", item.name)
+        print("color : ", item.color)
+        print("position : ", item.position)
+        print("rotation type : ", item.rotation_type)
+        print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+        print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+        print("weight : ", float(item.weight))
         volume_t += float(item.width) * float(item.height) * float(item.depth)
         print("***************************************************")
     print("***************************************************")
@@ -122,23 +127,23 @@ for box in packer.bins:
     print("UNFITTED ITEMS:")
     for item in box.unfitted_items:
         print("part_no : ", item.part_no)
-        print("type : ",item.name)
-        print("color : ",item.color)
-        print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-        print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-        print("weight : ",float(item.weight))
+        print("type : ", item.name)
+        print("color : ", item.color)
+        print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+        print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+        print("weight : ", float(item.weight))
         volume_f += float(item.width) * float(item.height) * float(item.depth)
         unfitted_name += '{},'.format(item.part_no)
         print("***************************************************")
     print("***************************************************")
-    print('space utilization : {}%'.format(round(volume_t / float(volume) * 100 ,2)))
-    print('residual volumn : ', float(volume) - volume_t )
-    print('unpack item : ',unfitted_name)
-    print('unpack item volumn : ',volume_f)
-    print("gravity distribution : ",box.gravity)
+    print('space utilization : {}%'.format(round(volume_t / float(volume) * 100, 2)))
+    print('residual volume : ', float(volume) - volume_t)
+    print('unpack item : ', unfitted_name)
+    print('unpack item volume : ', volume_f)
+    print("gravity distribution : ", box.gravity)
     # '''
     stop = time.time()
-    print('used time : ',stop - start)
+    print('used time : ', stop - start)
 
     # draw results
     painter = Painter(box)

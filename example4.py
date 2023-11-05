@@ -1,5 +1,10 @@
-from py3dbp import Packer, Bin, Item, Painter
 import time
+
+from py3dbp.agents.bin import Bin
+from py3dbp.agents.item import Item
+from py3dbp.agents.packer import Packer
+from py3dbp.agents.painter import Painter
+
 start = time.time()
 
 '''
@@ -26,61 +31,69 @@ packer.add_bin(box)
 # dyson DC34 (20.5 * 11.5 * 32.2 ,1.33kg)
 # 64 pcs per case ,  82 * 46 * 170 (85.12)
 for i in range(15): 
-    packer.add_item(Item(
-        part_no='Dyson DC34 Animal{}'.format(str(i + 1)),
-        name='Dyson', 
-        typeof='cube',
-        dims=(170, 82, 46),
-        weight=85.12,
-        level=1,
-        load_bear=100,
-        updown=True,
-        color='#FF0000')
+    packer.add_item(
+        Item(
+            part_no='Dyson DC34 Animal{}'.format(str(i + 1)),
+            name='Dyson',
+            typeof='cube',
+            dims=(170, 82, 46),
+            weight=85.12,
+            level=1,
+            load_bear=100,
+            updown=True,
+            color='#FF0000'
+        )
     )
 
 # washing machine (85 * 60 *60 ,10 kG)
 # 1 pcs per case, 85 * 60 *60 (10)
 for i in range(18):
-    packer.add_item(Item(
-        part_no='wash{}'.format(str(i + 1)),
-        name='wash',
-        typeof='cube',
-        dims=(85, 60, 60),
-        weight=10,
-        level=1,
-        load_bear=100,
-        updown=True,
-        color='#FFFF37'
-    ))
+    packer.add_item(
+        Item(
+            part_no=F'wash{i + 1}',
+            name='wash',
+            typeof='cube',
+            dims=(85, 60, 60),
+            weight=10,
+            level=1,
+            load_bear=100,
+            updown=True,
+            color='#FFFF37'
+        )
+    )
 
 # 42U standard cabinet (60 * 80 * 200 , 80 kg)
 # one per box, 60 * 80 * 200 (80)
 for i in range(15):
-    packer.add_item(Item(
-        part_no='Cabinet{}'.format(str(i + 1)),
-        name='cabint',
-        typeof='cube',
-        dims=(60, 80, 200),
-        weight=80,
-        level=1,
-        load_bear=100,
-        updown=True,
-        color='#842B00')
+    packer.add_item(
+        Item(
+            part_no='Cabinet{}'.format(str(i + 1)),
+            name='cabinet',
+            typeof='cube',
+            dims=(60, 80, 200),
+            weight=80,
+            level=1,
+            load_bear=100,
+            updown=True,
+            color='#842B00'
+        )
     )
 
 # Server (70 * 100 * 30 , 20 kg) 
 # one per box , 70 * 100 * 30 (20)
 for i in range(42):
-    packer.add_item(Item(
-        part_no='Server{}'.format(str(i + 1)),
-        name='server',
-        typeof='cube',
-        dims=(70, 100, 30),
-        weight=20,
-        level=1,
-        load_bear=100,
-        updown=True,
-        color='#0000E3')
+    packer.add_item(
+        Item(
+            part_no='Server{}'.format(str(i + 1)),
+            name='server',
+            typeof='cube',
+            dims=(70, 100, 30),
+            weight=20,
+            level=1,
+            load_bear=100,
+            updown=True,
+            color='#0000E3'
+        )
     )
 
 
@@ -91,8 +104,8 @@ packer.pack(
     fix_point=True,
     check_stable=True,
     support_surface_ratio=0.75,
-    # binding=[('server','cabint','wash')],
-    # binding=['cabint','wash','server'],
+    # binding=[('server','cabinet','wash')],
+    # binding=['cabinet','wash','server'],
     number_of_decimals=0
 )
 
@@ -110,13 +123,13 @@ for box in packer.bins:
     # '''
     for item in box.items:
         print("part_no : ", item.part_no)
-        print("type : ",item.name)
-        print("color : ",item.color)
-        print("position : ",item.position)
-        print("rotation type : ",item.rotation_type)
-        print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-        print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-        print("weight : ",float(item.weight))
+        print("type : ", item.name)
+        print("color : ", item.color)
+        print("position : ", item.position)
+        print("rotation type : ", item.rotation_type)
+        print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+        print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+        print("weight : ", float(item.weight))
         volume_t += float(item.width) * float(item.height) * float(item.depth)
         print("***************************************************")
     print("***************************************************")
@@ -124,23 +137,23 @@ for box in packer.bins:
     print("UNFITTED ITEMS:")
     for item in box.unfitted_items:
         print("part_no : ", item.part_no)
-        print("type : ",item.name)
-        print("color : ",item.color)
-        print("W*H*D : ",str(item.width) +'*'+ str(item.height) +'*'+ str(item.depth))
-        print("volume : ",float(item.width) * float(item.height) * float(item.depth))
-        print("weight : ",float(item.weight))
+        print("type : ", item.name)
+        print("color : ", item.color)
+        print("W*H*D : ", str(item.width) + '*' + str(item.height) + '*' + str(item.depth))
+        print("volume : ", float(item.width) * float(item.height) * float(item.depth))
+        print("weight : ", float(item.weight))
         volume_f += float(item.width) * float(item.height) * float(item.depth)
         unfitted_name += '{},'.format(item.part_no)
         print("***************************************************")
     print("***************************************************")
-    print('space utilization : {}%'.format(round(volume_t / float(volume) * 100 ,2)))
-    print('residual volumn : ', float(volume) - volume_t )
-    print('unpack item : ',unfitted_name)
-    print('unpack item volumn : ',volume_f)
-    print("gravity distribution : ",box.gravity)
+    print('space utilization: {}%'.format(round(volume_t / float(volume) * 100, 2)))
+    print('residual volume: ', float(volume) - volume_t)
+    print('unpack item: ', unfitted_name)
+    print('unpack item volume: ', volume_f)
+    print("gravity distribution: ", box.gravity)
     # '''
     stop = time.time()
-    print('used time : ',stop - start)
+    print('used time : ', stop - start)
 
     # draw results
     painter = Painter(box)

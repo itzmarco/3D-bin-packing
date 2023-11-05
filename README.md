@@ -55,7 +55,7 @@
     <img src="https://github.com/jerry800416/3dbinpacking/blob/master/img/7.jpeg" width="600"/>
 
 7. **Paint picture :** 
-    * `[painter.plotBoxAndItems()]` Draw pictures.
+    * `[painter.plot_box_and_items()]` Draw pictures.
 
 8. **Calculate gravity distribution :**
     * `print("gravity distribution : ",bin.gravity) ` Divide the bin into four equal parts, and calculate the weight ratio of the equal parts. Ideally, the weight ratio of each equal part tends to be close.
@@ -100,7 +100,7 @@
 **Init bin :** 
 ```python
 box1 = Bin(
-    partno='Bin',         # partno / PN of item (unique value)
+    partno='Bin',         # part_no / PN of item (unique value)
     WHD=(589,243,259),    # (width , height , depth)
     max_weight=28080,     # box can bear the weight
     corner=15             # container coner
@@ -111,7 +111,7 @@ box1 = Bin(
 **Init item :** 
 ```python
 item1 = Item(
-    partno='testItem', # partno / PN of item (unique value)
+    partno='testItem', # part_no / PN of item (unique value)
     name='wash',       # type of item
     typeof='cube',     # cube or cylinder
     WHD=(85, 60, 60),  # (width , height , depth)
@@ -129,9 +129,10 @@ packer = Packer()          # packer init
 ```
 
 **Add bin and items to packer : ~~(Warning : You can only add one bin,but you can add many items.)~~ Now you can add multiple bins/boxes,plz check example7.**
+
 ```python
-packer.addBin(box1)       # adding bins to packer
-packer.addItem(item1)     # adding items to packer
+packer.add_bin(box1)  # adding bins to packer
+packer.add_item(item1)  # adding items to packer
 ```
 
 **Start pack items :** 
@@ -140,7 +141,7 @@ packer.pack(
     bigger_first=True,                 # bigger item first.
     fix_point=True,                    # fix item float problem.
     binding=[('server','cabint')],     # make a set of items.
-    distribute_items=True,             # If multiple bin, to distribute or not.
+    distribute_items=True,             # If multiple bin_, to distribute or not.
     check_stable=True,                 # check stability on item.
     support_surface_ratio=0.75,        # set support surface ratio.
     number_of_decimals=0
@@ -149,27 +150,29 @@ packer.pack(
 
 **Results :**
 ```python
-packer.bins              # get bin of packer
-packer.bin[i].items      # get fitted items in bin
+packer.bins              # get bin_ of packer
+packer.bin[i].items      # get fitted items in bin_
 packer.unfit_items       # get unfitted items 
 ```
 
 **Painting :**
+
 ```python
-for b in packer :
-    painter = Painter(b)
-    fig = painter.plotBoxAndItems(
-        title=b.partno,
-        alpha=0.2,         # set item alpha
-        write_num=True,    # open/close write part number 
-        fontsize=10        # control write_num fontsize
-    )
+for b in packer:
+	painter = Painter(b)
+	fig = painter.plot_box_and_items(
+		title=b.part_no,
+		alpha=0.2,  # set item alpha
+		write_num=True,  # open/close write part number 
+		fontsize=10  # control write_num fontsize
+	)
 fig.show() 
 ```
 
 ## Example
 
 #### Simple example
+
 ```python
 from py3dbp import Packer, Bin, Item
 import time
@@ -179,36 +182,36 @@ start = time.time()
 # init packing function
 packer = Packer()
 
-#  init bin
-box = Bin('example',(30, 10, 15), 99,0)
-packer.addBin(box)
+#  init bin_
+box = Bin('example', (30, 10, 15), 99, 0)
+packer.add_bin(box)
 
 #  add item
-packer.addItem(Item('test1', 'test','cube',(9, 8, 7), 1, 1, 100, True,'red'))
-packer.addItem(Item('test2', 'test','cube',(4, 25, 1), 1, 1, 100, True,'blue'))
-packer.addItem(Item('test3', 'test','cube',(2, 13, 5), 1, 1, 100, True,'gray'))
-packer.addItem(Item('test4', 'test','cube',(7, 5, 4), 1, 1, 100, True,'orange'))
-packer.addItem(Item('test5', 'test','cube',(10, 5, 2), 1, 1, 100, True,'lawngreen'))
+packer.add_item(Item('test1', 'test', 'cube', (9, 8, 7), 1, 1, 100, True, 'red'))
+packer.add_item(Item('test2', 'test', 'cube', (4, 25, 1), 1, 1, 100, True, 'blue'))
+packer.add_item(Item('test3', 'test', 'cube', (2, 13, 5), 1, 1, 100, True, 'gray'))
+packer.add_item(Item('test4', 'test', 'cube', (7, 5, 4), 1, 1, 100, True, 'orange'))
+packer.add_item(Item('test5', 'test', 'cube', (10, 5, 2), 1, 1, 100, True, 'lawngreen'))
 
 # calculate packing 
 packer.pack(
-    bigger_first=True,
-    fix_point=True,
-    distribute_items=True,
-    check_stable=True,
-    support_surface_ratio=0.75,
-    number_of_decimals=0
+	bigger_first=True,
+	fix_point=True,
+	distribute_items=True,
+	check_stable=True,
+	support_surface_ratio=0.75,
+	number_of_decimals=0
 )
 
 # paint the results
-for b in packer :
-    painter = Painter(b)
-    fig = painter.plotBoxAndItems(
-        title=b.partno,
-        alpha=0.2,         
-        write_num=True,   
-        fontsize=10        
-    )
+for b in packer:
+	painter = Painter(b)
+	fig = painter.plot_box_and_items(
+		title=b.part_no,
+		alpha=0.2,
+		write_num=True,
+		fontsize=10
+	)
 fig.show()
 ```
 #### example0
